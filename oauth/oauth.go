@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	headerXPublix    = "x-public"
+	headerXPublic    = "x-public"
 	headerXClientId  = "x-client-id"
 	headerXCallerId  = "x-caller-id"
-	paramAccessToken = "access_token"
+	paramAccessToken = "accessToken"
 )
 
 type accessToken struct {
@@ -28,7 +28,7 @@ func IsPublic(request *http.Request) bool {
 		return true
 	}
 
-	return request.Header.Get(headerXPublix) == "true"
+	return request.Header.Get(headerXPublic) == "true"
 }
 
 func GetCallerId(request *http.Request) int64 {
@@ -92,7 +92,7 @@ func cleanRequest(request *http.Request) {
 }
 
 func getAccessToken(token string) (*accessToken, *errors.RestErr) {
-	resp, err := http.Get(fmt.Sprintf("http://localhost:3001/oauth/access_token/%s", token))
+	resp, err := http.Get(fmt.Sprintf("http://localhost:3001/oauth/access-token/%s", token))
 
 	if err != nil {
 		return nil, errors.NewInternalServerError("error request when trying to get access token")
