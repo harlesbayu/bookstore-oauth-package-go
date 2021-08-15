@@ -92,7 +92,7 @@ func cleanRequest(request *http.Request) {
 }
 
 func getAccessToken(token string) (*accessToken, *errors.RestErr) {
-	resp, err := http.Get(fmt.Sprintf("http://localhost:8080/oauth/access_token/%s", token))
+	resp, err := http.Get(fmt.Sprintf("http://localhost:3001/oauth/access_token/%s", token))
 
 	if err != nil {
 		return nil, errors.NewInternalServerError("error request when trying to get access token")
