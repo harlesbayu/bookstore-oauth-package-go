@@ -101,7 +101,7 @@ func getAccessToken(token string) (*accessToken, *errors.RestErr) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, errors.NewNotFoundError("user not found")
+		return nil, errors.NewInternalServerError("error request when trying to get access token")
 	}
 
 	var at accessToken
