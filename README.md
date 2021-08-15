@@ -1,1 +1,1 @@
-# bookstore-oauth-package-go
+# bookstore-oauth-go
