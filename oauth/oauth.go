@@ -2,12 +2,13 @@ package oauth
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
 
-	"github.com/harlesbayu/bookstore-oauth-package-go/oauth/errors"
+	"github.com/harlesbayu/bookstore-utils-go/rest_errors"
 )
 
 const (
@@ -57,7 +58,7 @@ func GetClientId(request *http.Request) int64 {
 	return callerId
 }
 
-func AuthenticateRequest(request *http.Request) *errors.RestErr {
+func AuthenticateRequest(request *http.Request) *rest_errors.RestErr {
 	if request == nil {
 		return nil
 	}
@@ -91,17 +92,17 @@ func cleanRequest(request *http.Request) {
 	request.Header.Del(headerXCallerId)
 }
 
-func getAccessToken(token string) (*accessToken, *errors.RestErr) {
+func getAccessToken(token string) (*accessToken, *rest_errors.RestErr) {
 	resp, err := http.Get(fmt.Sprintf("http://localhost:3001/oauth/access-token/%s", token))
 
 	if err != nil {
-		return nil, errors.NewInternalServerError("error request when trying to get access token")
+		return nil, rest_errors.NewInternalServerError("error request when trying to get access token", errors.New("request error"))
 	}
 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, errors.NewInternalServerError("error request when trying to get access token")
+		return nil, rest_errors.NewInternalServerError("error request when trying to get access token", err)
 	}
 
 	var at accessToken
