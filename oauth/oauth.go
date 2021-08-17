@@ -58,7 +58,7 @@ func GetClientId(request *http.Request) int64 {
 	return callerId
 }
 
-func AuthenticateRequest(request *http.Request) *rest_errors.RestErr {
+func AuthenticateRequest(request *http.Request) rest_errors.RestErr {
 	if request == nil {
 		return nil
 	}
@@ -92,7 +92,7 @@ func cleanRequest(request *http.Request) {
 	request.Header.Del(headerXCallerId)
 }
 
-func getAccessToken(token string) (*accessToken, *rest_errors.RestErr) {
+func getAccessToken(token string) (*accessToken, rest_errors.RestErr) {
 	resp, err := http.Get(fmt.Sprintf("http://localhost:3001/oauth/access-token/%s", token))
 
 	if err != nil {
